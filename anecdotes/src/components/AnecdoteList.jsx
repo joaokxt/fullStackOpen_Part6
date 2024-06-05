@@ -31,19 +31,16 @@ const AnecdoteList = () => {
     })
     const dispatch = useDispatch()
 
-    const vote = (id, title) => {
-        dispatch(voteAnecdote(id))
-        dispatch(setNotification({ activity: 'vote', title }))
-        setTimeout(() => {
-            dispatch(zeroNotification())
-        }, 5000)
+    const vote = (object) => {
+        dispatch(voteAnecdote(object))
+        dispatch(setNotification(`You voted ${object.content}`, 5))
     }
 
     return (
         <div>
           <h2>Anecdotes</h2>
           {anecdotes.map(anecdote =>
-            <Anecdote key={anecdote.id} anecdote={anecdote} handleButton={() => vote(anecdote.id, anecdote.content)} />
+            <Anecdote key={anecdote.id} anecdote={anecdote} handleButton={() => vote(anecdote)} />
           )}
           
         </div>
