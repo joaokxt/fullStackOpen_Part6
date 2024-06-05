@@ -16,7 +16,18 @@ const Anecdote = ({ anecdote, handleButton }) => {
 }
 
 const AnecdoteList = () => {
-    const anecdotes = useSelector(state => state)
+    const checkMatch = (query, target) => {
+        const upperTarget = target.toUpperCase()
+        return upperTarget.includes(query)
+    }
+
+    const anecdotes = useSelector(({ filter, anecdotes }) => {
+        if (filter === '') {
+            return anecdotes
+        }
+
+        return anecdotes.filter(anecdote => checkMatch(filter, anecdote.content))
+    })
     const dispatch = useDispatch()
 
     const vote = (id) => {
